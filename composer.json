@@ -1,0 +1,22 @@
+{
+    "name": "bennetgallein/bind-dashboard",
+    "description": "A Dashboard for BIND-Instances",
+    "type": "project",
+    "license": "GPL3.0",
+    "authors": [
+        {
+            "name": "Bennet Gallein",
+            "email": "bennet@intranetproject.net"
+        }
+    ],
+    "require": {
+        "bennetgallein/angle-framework": "dev-master",
+        "bennetgallein/bind-php-wrapper": "^0.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "Controllers/",
+            "Objects\\": "Objects/"
+        }
+    }
+}
