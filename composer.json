@@ -11,7 +11,7 @@
     ],
     "require": {
         "bennetgallein/angle-framework": "dev-master",
-        "bennetgallein/bind-php-wrapper": "^0.1.0"
+        "bennetgallein/bind-php-wrapper": "dev-master"
     },
     "autoload": {
         "psr-4": {
