@@ -22,6 +22,7 @@
             </header>
             <div class="card-content">
                 <div class="content">
+                    { if :render }
                     <table class="table is-bordered">
                         <thead>
                         <tr>
@@ -33,15 +34,20 @@
                         </tr>
                         </thead>
                         <tbody>
+                        { foreach :domain in :domains }
                         <tr>
-                            <td>abcdefg.de</td>
+                            <td>{ :domain.name }</td>
                             <td class="has-text-centered"><i class="material-icons">done</i></td>
                             <td class="has-text-centered"><i class="material-icons">done</i></td>
                             <td>27.05.2099</td>
                             <td><a class="button is-primary"><i class="material-icons" style="font-size:18px;">build</i>   Edit</a></td>
                         </tr>
+                        { endforeach }
                         </tbody>
                     </table>
+                    { else }
+                    <p>No active Domains</p>
+                    { endif }
                 </div>
             </div>
             <footer class="card-footer">

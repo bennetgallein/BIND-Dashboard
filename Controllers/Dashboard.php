@@ -27,6 +27,12 @@ class Dashboard {
             'methods' => 'GET'
         )));
 
+        $collection->attachRoute(new Route('/dashboard', array(
+           '_controller' => '\Controllers\Dashboard\DomainListing::render',
+           'parameters' => ["engine" => $engine],
+           'methods' => 'GET'
+        )));
+
         $router = new Router($collection);
         $route = $router->matchCurrentRequest();
         if (!$route) {
