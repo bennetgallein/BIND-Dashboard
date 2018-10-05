@@ -49,19 +49,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bennetgallein/BIND-PHPWrapper.git",
-                "reference": "65c26f79df0f56e6c7486c559d10d203441f30da"
+                "reference": "51d47370dbf7b4ee5abb9d1c7fa64dd6b79843d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bennetgallein/BIND-PHPWrapper/zipball/65c26f79df0f56e6c7486c559d10d203441f30da",
-                "reference": "65c26f79df0f56e6c7486c559d10d203441f30da",
+                "url": "https://api.github.com/repos/bennetgallein/BIND-PHPWrapper/zipball/51d47370dbf7b4ee5abb9d1c7fa64dd6b79843d7",
+                "reference": "51d47370dbf7b4ee5abb9d1c7fa64dd6b79843d7",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "^7.2",
-                "ext-json": "^1.6",
                 "myclabs/php-enum": "^1.6",
-                "php": ">=7.2",
+                "php": ">=7.1",
                 "tracy/tracy": "^2.5"
             },
             "type": "library",
@@ -78,7 +76,7 @@
                 }
             ],
             "description": "A Wrapper to bind the PythonAPI to PHP",
-            "time": "2018-10-04T22:28:47+00:00"
+            "time": "2018-10-05T13:00:41+00:00"
         },
         {
             "name": "fig/http-message-util",
