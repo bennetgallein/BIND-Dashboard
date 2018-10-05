@@ -12,11 +12,13 @@ namespace Controllers\Dashboard;
 use Angle\Engine\Template\Engine;
 use BIND\BIND;
 
-class DomainListing {
+class DomainListing
+{
 
-    public static function render(Engine $engine) {
+    public static function render(Engine $engine)
+    {
 
-        $domain = "gal1lein2.de";
+        $domain = "gallein2.de";
 
         $bind = new BIND("192.168.1.104");
 
@@ -35,5 +37,10 @@ class DomainListing {
             "render" => $render,
             "domains" => $data
         ));
+    }
+
+    public static function dns(Engine $engine)
+    {
+        $engine->render("views/dns.html", array());
     }
 }

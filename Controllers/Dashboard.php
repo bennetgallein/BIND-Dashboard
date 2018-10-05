@@ -14,9 +14,11 @@ use Angle\Engine\RouterEngine\Route;
 use Angle\Engine\RouterEngine\Router;
 use Angle\Engine\Template\Engine;
 
-class Dashboard {
+class Dashboard
+{
 
-    public static function initiate() {
+    public static function initiate()
+    {
 
         $engine = new Engine();
         $collection = new Collection();
@@ -28,9 +30,15 @@ class Dashboard {
         )));
 
         $collection->attachRoute(new Route('/dashboard', array(
-           '_controller' => '\Controllers\Dashboard\DomainListing::render',
-           'parameters' => ["engine" => $engine],
-           'methods' => 'GET'
+            '_controller' => '\Controllers\Dashboard\DomainListing::render',
+            'parameters' => ["engine" => $engine],
+            'methods' => 'GET'
+        )));
+
+        $collection->attachRoute(new Route('/dns', array(
+            '_controller' => '\Controllers\Dashboard\DomainListing::dns',
+            'parameters' => ["engine" => $engine],
+            'methods' => 'GET'
         )));
 
         $router = new Router($collection);
@@ -40,7 +48,9 @@ class Dashboard {
         }
 
     }
-    public static function render(Engine $engine) {
+
+    public static function render(Engine $engine)
+    {
         $engine->render("views/index.html", array());
     }
 }

@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-    <title>Domains</title>
+    <title>DNS-Entries</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link rel="stylesheet" href="css/domains.css">
@@ -14,41 +14,44 @@
 <body>
 <section class="section">
     <div class="container">
-        <div class="card is-three-fifths column is-offset-one-fifth">
+        <div class="card is-8 column is-offset-2">
             <header class="card-header has-text-centered">
                 <p class="card-header-title has-text-centered">
-                    Your Domains
+                    Your DNS-Entries
                 </p>
                 </a>
             </header>
             <div class="card-content">
                 <div class="content">
-                    { if :render }
                     <table class="table is-bordered">
                         <thead>
                         <tr>
-                            <th>Domain</th>
-                            <th>Primary (PDNS)</th>
-                            <th>Secondary (SDNS)</th>
-                            <th>Eingetragen seit</th>
+                            <th>Hostname</th>
+                            <th>Points to</th>
+                            <th>TTL</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        { foreach :domain in :domains }
                         <tr>
-                            <td>{ :domain.name }</td>
-                            <td class="has-text-centered"><i class="material-icons">done</i></td>
-                            <td class="has-text-centered"><i class="material-icons">done</i></td>
-                            <td>27.05.2099</td>
-                            <td><a class="button is-primary"><i class="material-icons" style="font-size:18px;">build</i>   Edit</a></td>
+                            <td>bennetgallein.de</td>
+                            <td class="has-text-centered">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="1.1.1.1">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="has-text-centered">86400</td>
+                            <td class="has-text-centered">
+                                <div>
+                                    <a class="button is-success"><i class="material-icons" style="font-size:18px;">check</i></a>
+                                    <a class="button is-danger"><i class="material-icons" style="font-size: 18px;">close</i></a>
+                                </div>
+                            </td>
                         </tr>
-                        { endforeach }
                         </tbody>
                     </table>
-                    { else }
-                    <p>No active Domains</p>
-                    { endif }
                 </div>
             </div>
             <footer class="card-footer">
