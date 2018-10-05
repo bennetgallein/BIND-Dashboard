@@ -23,6 +23,7 @@
             </header>
             <div class="card-content">
                 <div class="content">
+                    { if :render }
                     <table class="table is-bordered">
                         <thead>
                         <tr>
@@ -33,16 +34,17 @@
                         </tr>
                         </thead>
                         <tbody>
+                        { foreach :rec in :data }
                         <tr>
-                            <td>bennetgallein.de</td>
+                            <td>{ :rec.name }</td>
                             <td class="has-text-centered">
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="1.1.1.1">
+                                        <input class="input" type="text" value="{ :rec.answer }">
                                     </div>
                                 </div>
                             </td>
-                            <td class="has-text-centered">86400</td>
+                            <td class="has-text-centered">{ :rec.TTL }</td>
                             <td class="has-text-centered">
                                 <div>
                                     <a class="button is-success"><i class="material-icons" style="font-size:18px;">check</i></a>
@@ -50,8 +52,12 @@
                                 </div>
                             </td>
                         </tr>
+                        { endforeach }
                         </tbody>
                     </table>
+                    { else }
+                    <p> No Entrys </p>
+                    { endif }
                 </div>
             </div>
             <footer class="card-footer">
