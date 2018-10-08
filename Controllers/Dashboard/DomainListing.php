@@ -12,26 +12,23 @@ namespace Controllers\Dashboard;
 use Angle\Engine\Template\Engine;
 use BIND\BIND;
 
-class DomainListing
-{
+class DomainListing {
 
-    public static function render(Engine $engine)
-    {
+    public static function render(Engine $engine) {
 
         $domain = "gallein2.de";
 
         $bind = new BIND("192.168.1.104");
 
-        $a = $bind->getZone($domain);
-        dump($a);
-
-        $render = $a->getDomain() != "error";
+        //$a = $bind->getZone($domain);
+        $render = true;
+        //$render = $a->getDomain() != "error";
 
         $data = array();
-        if ($render) {
+        /*if ($render) {
             $data[] = array("name" => $a->getDomain());
-        }
-        //dump(dns_get_record('bennetgallein.de', DNS_NS));
+        }*/
+        $data[] = array("name" => $domain);
 
         $engine->render("views/domains.html", array(
             "render" => $render,
@@ -39,8 +36,29 @@ class DomainListing
         ));
     }
 
-    public static function dns(Engine $engine)
-    {
-        $engine->render("views/dns.html", array());
+    public static function dns(Engine $engine) {
+
+        $domain = "gallein2.de";
+
+        //$bind = new BIND("192.168.1.104");
+
+        //$a = $bind->getZone($domain);
+
+        //$render = $a->getDomain() != "error";
+        $render = true;
+
+        $data = array();
+        /*if ($render) {
+            foreach ($a->getRecords() as $record) {
+                $data[] = array("name" => $record->getName(), "answer" => $record->getAnswer(), "TTL" => $record->getTTL());
+            }
+        }*/
+        $data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
+        $data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
+
+        $engine->render("views/dns.html", array(
+            "render" => $render,
+            "data" => $data,
+        ));
     }
 }

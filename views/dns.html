@@ -23,6 +23,7 @@
             </header>
             <div class="card-content">
                 <div class="content">
+                    { if :render }
                     <table class="table is-bordered">
                         <thead>
                         <tr>
@@ -33,32 +34,102 @@
                         </tr>
                         </thead>
                         <tbody>
+                        { foreach :rec in :data }
                         <tr>
-                            <td>bennetgallein.de</td>
+                            <td>{ :rec.name }</td>
                             <td class="has-text-centered">
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="1.1.1.1">
+                                        <input class="input" type="text" value="{ :rec.answer }">
                                     </div>
                                 </div>
                             </td>
-                            <td class="has-text-centered">86400</td>
+                            <td class="has-text-centered">{ :rec.TTL }</td>
                             <td class="has-text-centered">
                                 <div>
-                                    <a class="button is-success"><i class="material-icons" style="font-size:18px;">check</i></a>
+                                    <a class="button is-primary" onclick="editDomain()"><i class="material-icons" style="font-size:18px;">build</i>Edit</a>
+
                                     <a class="button is-danger"><i class="material-icons" style="font-size: 18px;">close</i></a>
                                 </div>
                             </td>
                         </tr>
+                        { endforeach }
                         </tbody>
                     </table>
+                    { else }
+                    <p> No Entrys </p>
+                    { endif }
+                </div>
+                <div class="modal" id="editDomain">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Edit Domain</p>
+                            <button class="delete" aria-label="close" onclick="editDomain()"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <div class="field">
+                                <label class="label">New Hostname</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Hostname">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Points to</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="New Pointer">
+                                </div>
+                            </div>
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button class="button is-success" onclick="editDomain()">Save changes</button>
+                            <button class="button" onclick="editDomain()">Cancel</button>
+                        </footer>
+                    </div>
                 </div>
             </div>
             <footer class="card-footer">
-                <a href="#" class="card-footer-item button pushed">Refresh</a>
+                <a href="#" class="card-footer-item button pushed" onclick="addDomain()">Add Domain</a>
+                <div class="modal" id="addDomain">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">New Domain</p>
+                            <button class="delete" aria-label="close" onclick="addDomain()"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <div class="field">
+                                <label class="label">New Hostname</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Hostname">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Points to</label>
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="New Pointer">
+                                </div>
+                            </div>
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button class="button is-success" onclick="addDomain()">Save</button>
+                            <button class="button" onclick="addDomain()">Cancel</button>
+                        </footer>
+                    </div>
+                </div>
             </footer>
         </div>
     </div>
 </section>
+<script>
+    function addDomain() {
+        var element = document.getElementById("addDomain");
+        element.classList.toggle("is-active");
+    }
+    function editDomain() {
+        var element = document.getElementById("editDomain");
+        element.classList.toggle("is-active");
+    }
+</script>
 </body>
 </html>
