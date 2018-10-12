@@ -1,0 +1,6 @@
+{
+  "DB_HOST": "localhost",
+  "DB_USER": "bind",
+  "DB_PASSWORD": "bind-dashboard",
+  "DB": "bind-dashboard"
+}

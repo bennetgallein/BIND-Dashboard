@@ -11,7 +11,8 @@
     ],
     "require": {
         "bennetgallein/angle-framework": "dev-master",
-        "bennetgallein/bind-php-wrapper": "dev-master"
+        "bennetgallein/bind-php-wrapper": "dev-master",
+        "simplon/mysql": "^2.2"
     },
     "autoload": {
         "psr-4": {
