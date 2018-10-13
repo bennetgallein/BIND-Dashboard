@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/bennetgallein/bind-dashboard/downloads?format=flat)](https://packagist.org/packages/bennetgallein/bind-dashboard)
 [![License](https://poser.pugx.org/bennetgallein/bind-dashboard/license)](https://packagist.org/packages/bennetgallein/bind-dashboard)
 
-![](header.png)
+![](pics/login.png)
 
 This Panel offers a User-Based Panel to manage DNS-Entrys for Domains on your own Nameservers.
 
