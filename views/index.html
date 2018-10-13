@@ -24,26 +24,57 @@
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Your Name">
+                            <input id="email" class="input" type="text" placeholder="Your Email">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Password</label>
                         <div class="control">
-                            <input class="input" type="password" placeholder="Your Password">
+                            <input id="password" class="input" type="password" placeholder="Your Password">
                         </div>
                     </div>
                     <div class="has-text-centered">
-                        <a class="button is-link">Go!</a>
+                        <a id="submit" class="button is-link">Login</a>
                     </div>
                 </div>
             </div>
-            <!--<footer class="card-footer">
-                <a href="#" class="card-footer-item">Register</a>
-            </footer>-->
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script>
+
+    $("#submit").click(function () {
+        $.post("{ :app_url }/api/login", {
+            email: $("#email").val(),
+            password: $("#password").val()
+        }, function (data, status) {
+            obj = JSON.parse(data);
+            if (obj.hasOwnProperty("error")) {
+                $(".card-content").prepend(
+                    $('<div class="notification is-danger">\n' +
+                        '  <button class="delete"></button>' + obj.error + '</div>').hide().fadeIn("slow")
+                );
+            } else {
+                $(".card-content").prepend(
+                    $('<div class="notification is-success">\n' +
+                        '  <button class="delete"></button>Success! Redirecting to Dashboard in 3 seconds. Not working?<a href="{ :app_url }/dashboard">Click here</a></div>').hide().fadeIn("slow")
+                );
+                setTimeout(function() {
+                    location.replace("{ :app_url }/dashboard");
+                }, 3000);
+            }
+        });
+    });
+
+    $(document).on('click', '.notification > button.delete', function() {
+        $(this).parent().fadeOut("slow");
+        return false;
+    });
+
+</script>
 </body>
 </html>

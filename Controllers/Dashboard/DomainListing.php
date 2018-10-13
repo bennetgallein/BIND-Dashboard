@@ -20,15 +20,13 @@ class DomainListing {
 
         $bind = new BIND("192.168.1.104");
 
-        //$a = $bind->getZone($domain);
-        $render = true;
-        //$render = $a->getDomain() != "error";
+        $a = $bind->getZone($domain);
+        $render = $a->getDomain() != "error";
 
         $data = array();
-        /*if ($render) {
+        if ($render) {
             $data[] = array("name" => $a->getDomain());
-        }*/
-        $data[] = array("name" => $domain);
+        }
 
         $engine->render("views/domains.html", array(
             "render" => $render,
@@ -40,21 +38,20 @@ class DomainListing {
 
         $domain = "gallein2.de";
 
-        //$bind = new BIND("192.168.1.104");
+        $bind = new BIND("192.168.1.104");
 
-        //$a = $bind->getZone($domain);
+        $a = $bind->getZone($domain);
 
-        //$render = $a->getDomain() != "error";
-        $render = true;
+        $render = $a->getDomain() != "error";
 
         $data = array();
-        /*if ($render) {
+        if ($render) {
             foreach ($a->getRecords() as $record) {
                 $data[] = array("name" => $record->getName(), "answer" => $record->getAnswer(), "TTL" => $record->getTTL());
             }
-        }*/
-        $data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
-        $data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
+        }
+        //$data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
+        //$data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
 
         $engine->render("views/dns.html", array(
             "render" => $render,

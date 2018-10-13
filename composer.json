@@ -2,7 +2,7 @@
     "name": "bennetgallein/bind-dashboard",
     "description": "A Dashboard for BIND-Instances",
     "type": "project",
-    "license": "GPL3.0",
+    "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "Bennet Gallein",
@@ -11,7 +11,8 @@
     ],
     "require": {
         "bennetgallein/angle-framework": "dev-master",
-        "bennetgallein/bind-php-wrapper": "dev-master"
+        "bennetgallein/bind-php-wrapper": "dev-master",
+        "simplon/mysql": "^2.2"
     },
     "autoload": {
         "psr-4": {
