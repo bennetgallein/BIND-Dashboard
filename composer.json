@@ -2,7 +2,7 @@
     "name": "bennetgallein/bind-dashboard",
     "description": "A Dashboard for BIND-Instances",
     "type": "project",
-    "license": "GPL3.0",
+    "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "Bennet Gallein",
