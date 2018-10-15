@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link rel="stylesheet" href="css/domains.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 <body>
 <section class="section">
@@ -52,10 +53,31 @@
                 </div>
             </div>
             <footer class="card-footer">
-                <a href="#" class="card-footer-item button pushed">Refresh</a>
+                <a id="logout" class="card-footer-item button pushed is-danger">Logout</a>
             </footer>
         </div>
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+
+    $("#logout").click(function () {
+        $.get("{ :app_url }/api/logout", function (data, status) {
+            obj = JSON.parse(data);
+            if (obj.hasOwnProperty("error")) {
+                toastr.info("An Error accured!");
+            } else {
+                toastr.info("Logged out! Redirecting in 3 Seconds!");
+                setTimeout(function() {
+                    location.replace("{ :app_url }/");
+                }, 3000);
+            }
+        });
+    });
+
+</script>
 </body>
 </html>

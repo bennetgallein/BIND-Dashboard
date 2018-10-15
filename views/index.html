@@ -61,7 +61,7 @@
             } else {
                 $(".card-content").prepend(
                     $('<div class="notification is-success">\n' +
-                        '  <button class="delete"></button>Success! Redirecting to Dashboard in 3 seconds. Not working?<a href="{ :app_url }/dashboard">Click here</a></div>').hide().fadeIn("slow")
+                        '  <button class="delete"></button>Success! Redirecting to Dashboard in 3 seconds. Not working? <a href="{ :app_url }/dashboard">Click here</a></div>').hide().fadeIn("slow")
                 );
                 setTimeout(function() {
                     location.replace("{ :app_url }/dashboard");

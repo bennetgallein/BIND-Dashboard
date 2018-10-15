@@ -29,6 +29,10 @@ Visit the Website in your Browser and follow the Instructions ont the Website.
 
 As a Hoster-Panel: Use the Database to insert Users when the Register on your Panel and the API to assign them Domains.
 
+## API
+
+The Panel provides some REST-API points to enable register and deletion of users.
+
 ## Meta
 
 Your Name – [@bennetgallein](https://twitter.com/bennetgallein) – bennet@intranetproject.net
