@@ -13,6 +13,7 @@ use Angle\Engine\RouterEngine\Collection;
 use Angle\Engine\RouterEngine\Route;
 use Angle\Engine\RouterEngine\Router;
 use Angle\Engine\Template\Engine;
+use BIND\BIND;
 use Objects\Config;
 use Objects\User;
 use Simplon\Mysql\Mysql;
@@ -23,6 +24,7 @@ class Dashboard {
     static $database;
     static $user;
     static $config;
+    static $bind;
 
     public static function initiate() {
 
@@ -38,9 +40,6 @@ class Dashboard {
         $collection = new Collection();
 
         if (!$setup) {
-            self::$user = $user = isset($_SESSION['d_user']) ? $_SESSION['d_user'] : false;
-            if ($user) if (!($user instanceof User)) die("No cheating in the Session!");
-
             self::$database = new PDOConnector(
                 DB_HOST,
                 DB_USER,
@@ -49,6 +48,11 @@ class Dashboard {
             );
             self::$database = self::$database->connect('utf8', []);
             self::$database = new Mysql(self::$database);
+            self::$bind = new BIND(BIND_HOST, BIND_PORT, BIND_HTTPS);
+
+            self::$user = $user = isset($_SESSION['d_user']) ? $_SESSION['d_user'] : false;
+            if ($user) if (!($user instanceof User)) die("No cheating in the Session!");
+            $user->refresh();
 
             self::registerRoutes($collection, $engine, $user);
         } else {
@@ -85,19 +89,19 @@ class Dashboard {
         if ($user) {
             $collection->attachRoute(new Route('/', array(
                 '_controller' => '\Controllers\Dashboard\DomainListing::render',
-                'parameters' => ["engine" => $engine],
+                'parameters' => ["engine" => $engine, "user" => $user],
                 'methods' => 'GET'
             )));
 
             $collection->attachRoute(new Route('/dashboard', array(
                 '_controller' => '\Controllers\Dashboard\DomainListing::render',
-                'parameters' => ["engine" => $engine],
+                'parameters' => ["engine" => $engine, "user" => $user],
                 'methods' => 'GET'
             )));
 
-            $collection->attachRoute(new Route('/dns', array(
+            $collection->attachRoute(new Route('/dns/:domain', array(
                 '_controller' => '\Controllers\Dashboard\DomainListing::dns',
-                'parameters' => ["engine" => $engine],
+                'parameters' => ["engine" => $engine, "user" => $user, "domain" => '\d+'],
                 'methods' => 'GET'
             )));
         } else {
@@ -143,4 +147,10 @@ class Dashboard {
         return self::$config;
     }
 
+    /**
+     * @return BIND
+     */
+    public static function getBind() {
+        return self::$bind;
+    }
 }

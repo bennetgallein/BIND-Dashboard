@@ -11,36 +11,32 @@ namespace Controllers\Dashboard;
 
 use Angle\Engine\Template\Engine;
 use BIND\BIND;
+use Controllers\Dashboard;
+use Objects\User;
 
 class DomainListing {
 
-    public static function render(Engine $engine) {
-
-        $domain = "gallein2.de";
-
-        $bind = new BIND("192.168.1.104");
-
-        $a = $bind->getZone($domain);
-        $render = $a->getDomain() != "error";
-
+    public static function render(Engine $engine, User $user) {
         $data = array();
-        if ($render) {
-            $data[] = array("name" => $a->getDomain());
+        foreach ($user->getDomains() as $domain) {
+            $a = Dashboard::getBind()->getZone($domain['domain']);
+            $render = $a->getDomain() != "error";
+            if ($render) {
+                echo substr($a->getDomain(), -1);
+                $data[] = array("id" => $domain['id'],"name" => substr($a->getDomain(), -1) == "." ? rtrim($a->getDomain(), ".") : $a->getDomain() , "since" => $domain['since']);
+            }
         }
-
+        $render = true;
         $engine->render("views/domains.html", array(
             "render" => $render,
             "domains" => $data
         ));
     }
 
-    public static function dns(Engine $engine) {
+    public static function dns(Engine $engine, User $user, $domain) {
+        $domain = $user->getDomain($domain);
 
-        $domain = "gallein2.de";
-
-        $bind = new BIND("192.168.1.104");
-
-        $a = $bind->getZone($domain);
+        $a = Dashboard::getBind()->getZone($domain['domain']);
 
         $render = $a->getDomain() != "error";
 
@@ -50,8 +46,6 @@ class DomainListing {
                 $data[] = array("name" => $record->getName(), "answer" => $record->getAnswer(), "TTL" => $record->getTTL());
             }
         }
-        //$data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
-        //$data[] = array("name" => "test", "answer" => "192.168.1.1", "TTL" => 869400);
 
         $engine->render("views/dns.html", array(
             "render" => $render,

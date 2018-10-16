@@ -8,6 +8,9 @@
 
 namespace Objects;
 
+use Controllers\Dashboard;
+use Simplon\Mysql\MysqlQueryIterator;
+
 class User {
 
     private $id;
@@ -25,6 +28,11 @@ class User {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
+    }
+
+    private function loadDomains() {
+        $db = Dashboard::getDatabase();
+        $this->domains = $db->fetchRowMany('SELECT * FROM domains WHERE userid=:id', ['id' => $this->id]);
     }
 
     /**
@@ -76,11 +84,17 @@ class User {
         return $this->domains;
     }
 
-    /**
-     * @param void $domains
-     */
-    public function setDomains($domains): void {
-        $this->domains = $domains;
+    public function getDomain($id) {
+        foreach ($this->getDomains() as $domain) {
+            if ($domain['id'] == $id) {
+                return $domain;
+            }
+        }
+        return false;
+    }
+
+    public function refresh() {
+        $this->loadDomains();
     }
 
     /**
