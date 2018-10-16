@@ -12,6 +12,7 @@ namespace Objects;
 class Config {
 
     private $settings = array();
+    private $realpath;
 
     public function __construct() {
 
@@ -20,8 +21,8 @@ class Config {
             fwrite($fh, "");
             fclose($fh);
         }
-
-        $config = file_get_contents("config.json");
+        $this->realpath = realpath("config.json");
+        $config = file_get_contents($this->realpath);
         $config = json_decode($config, true);
         $this->settings = array_merge($this->settings, $config);
 
@@ -40,8 +41,6 @@ class Config {
     }
 
     public function __destruct() {
-        /** TODO: File dont get saved when called over API. Look into that! */
-        //dump(json_encode($this->settings, JSON_PRETTY_PRINT));
-        echo file_put_contents("config.json", json_encode($this->settings, JSON_PRETTY_PRINT));
+        file_put_contents($this->realpath, json_encode($this->settings, JSON_PRETTY_PRINT));
     }
 }

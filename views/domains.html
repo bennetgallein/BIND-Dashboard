@@ -65,7 +65,7 @@
 <script>
 
     $("#logout").click(function () {
-        $.get("{ :app_url }/api/logout", function (data, status) {
+        $.get("{ :app_url }api/logout", function (data, status) {
             obj = JSON.parse(data);
             if (obj.hasOwnProperty("error")) {
                 toastr.info("An Error accured!");

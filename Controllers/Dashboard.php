@@ -32,25 +32,57 @@ class Dashboard {
             define($key, $entry);
         }
 
-        self::$user = $user = isset($_SESSION['d_user']) ? $_SESSION['d_user'] : false;
-        if ($user) if (!($user instanceof User)) die("No cheating in the Session!");
-
-        self::$database = new PDOConnector(
-            DB_HOST,
-            DB_USER,
-            DB_PASSWORD,
-            DB
-        );
-        self::$database = self::$database->connect('utf8', []);
-        self::$database = new Mysql(self::$database);
+        $setup = defined("DB_HOST") ? false : true;
 
         $engine = new Engine();
         $collection = new Collection();
 
+        if (!$setup) {
+            self::$user = $user = isset($_SESSION['d_user']) ? $_SESSION['d_user'] : false;
+            if ($user) if (!($user instanceof User)) die("No cheating in the Session!");
 
+            self::$database = new PDOConnector(
+                DB_HOST,
+                DB_USER,
+                DB_PASSWORD,
+                DB
+            );
+            self::$database = self::$database->connect('utf8', []);
+            self::$database = new Mysql(self::$database);
+
+            self::registerRoutes($collection, $engine, $user);
+        } else {
+
+            $collection->attachRoute(new Route("/api/test/db", array(
+                '_controller' => '\Controllers\API\Setup::db',
+                'methods' => 'POST'
+            )));
+
+            $collection->attachRoute(new Route("/api/test/bind", array(
+                '_controller' => '\Controllers\API\Setup::bind',
+                'methods' => 'POST'
+            )));
+
+
+            $collection->attachRoute(new Route("/setup", array(
+                '_controller' => '\Controllers\Setup\StartSetup::setup',
+                'parameters' => ["engine" => $engine],
+                'methods' => 'GET'
+            )));
+        }
+
+        $router = new Router($collection);
+        $route = $router->matchCurrentRequest();
+        if (!$route) {
+            http_response_code(404);
+            $engine->render("views/404.html");
+        }
+
+    }
+
+    public static function registerRoutes($collection, $engine, $user) {
 
         if ($user) {
-
             $collection->attachRoute(new Route('/', array(
                 '_controller' => '\Controllers\Dashboard\DomainListing::render',
                 'parameters' => ["engine" => $engine],
@@ -87,26 +119,8 @@ class Dashboard {
             '_controller' => '\Controllers\Auth\Login::logout',
             'methods' => 'GET'
         )));
-        $collection->attachRoute(new Route("/api/test/db", array(
-            '_controller' => '\Controllers\API\Setup::db',
-            'methods' => 'POST'
-        )));
-
-
-        $collection->attachRoute(new Route("/setup", array(
-            '_controller' => '\Controllers\Setup\StartSetup::setup',
-            'parameters' => ["engine" => $engine],
-            'methods' => 'GET'
-        )));
-
-        $router = new Router($collection);
-        $route = $router->matchCurrentRequest();
-        if (!$route) {
-            http_response_code(404);
-            $engine->render("views/404.html");
-        }
-
     }
+
 
     /**
      * @return Mysql

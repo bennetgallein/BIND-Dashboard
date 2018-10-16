@@ -9,6 +9,7 @@
 namespace Controllers\API;
 
 
+use BIND\BIND;
 use Controllers\Dashboard;
 
 class Setup {
@@ -28,6 +29,24 @@ class Setup {
 
             die(json_encode(array("success" => true)));
         } catch (\PDOException $e) {
+            die(json_encode(array("success" => false, "error" => $e->getMessage())));
+        }
+    }
+    public static function bind() {
+        $host = $_POST['host'];
+        $port = $_POST['port'];
+        $https = $_POST['https'] === 'true' ? true : false;
+        $test = $_POST['domain'];
+        try {
+            $bind = new BIND($host, $port, $https);
+            $bind->getZone($test);
+
+            Dashboard::getConfig()->set("BIND_HOST", $host);
+            Dashboard::getConfig()->set("BIND_PORT", $port);
+            Dashboard::getConfig()->set("BIND_HTTPS", $https);
+
+            die(json_encode(array("success" => true)));
+        } catch (\Exception $e) {
             die(json_encode(array("success" => false, "error" => $e->getMessage())));
         }
     }

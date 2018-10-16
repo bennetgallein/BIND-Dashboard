@@ -20,7 +20,7 @@
         <div class="card is-three-fifths column is-offset-one-fifth">
             <header class="card-header has-text-centered">
                 <p class="card-header-title has-text-centered">
-                    Database Setup
+                    BIND Setup
                 </p>
                 </a>
             </header>
@@ -29,28 +29,30 @@
                     <div class="field">
                         <label class="label">Host:</label>
                         <div class="control">
-                            <input id="host" class="input" type="text" placeholder="Database Host"
+                            <input id="host" class="input" type="text" placeholder="BIND Host"
                                    autocomplete="off">
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">User:</label>
+                        <label class="label">Port:</label>
                         <div class="control">
-                            <input id="user" class="input" type="text" placeholder="Database User"
+                            <input id="port" class="input" type="text" placeholder="BIND Port (Default: 5000)"
                                    autocomplete="off">
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">Password:</label>
                         <div class="control">
-                            <input id="password" class="input" type="password" placeholder="Database Password"
-                                   autocomplete="off">
+                            <label class="checkbox">
+                                <input id="https" type="checkbox">
+                                use HTTPs
+                            </label>
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">Database:</label>
+                        <label class="label">Test Domain:</label>
+                        <small>A Domain that is setup on the Server to test the connection</small>
                         <div class="control">
-                            <input id="database" class="input" type="text" placeholder="Database"
+                            <input id="domain" class="input" type="text" placeholder="example.com"
                                    autocomplete="off">
                         </div>
                     </div>
@@ -76,15 +78,15 @@
     $("#submit").click(function () {
         // test DB
         let host = $("#host").val();
-        let user = $("#user").val();
-        let password = $("#password").val();
-        let db = $("#database").val();
+        let port = $("#port").val();
+        let https = $("#https").prop('checked');
+        let test = $("#domain").val();
 
-        $.post("{ :app_url }api/test/db", {
+        $.post("{ :app_url }api/test/bind", {
             host: host,
-            user: user,
-            password: password,
-            database: db
+            port: port,
+            https: https,
+            domain: test
         }, function (data, status) {
             obj = JSON.parse(data);
             if (obj.hasOwnProperty("error")) {
@@ -98,8 +100,8 @@
                     $('<div class="notification is-success">\n' +
                         '  <button class="delete"></button>Connection successful! Saved to config! Redirecting</div>').hide().fadeIn("slow")
                 );
-                setTimeout(function() {
-                    location.replace("{ :app_url }setup?n=b");
+                setTimeout(function () {
+                    location.replace("{ :app_url }setup?n=u");
                 }, 3000);
             }
         });

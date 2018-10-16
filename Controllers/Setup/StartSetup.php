@@ -14,6 +14,21 @@ use Angle\Engine\Template\Engine;
 class StartSetup {
 
     public static function setup(Engine $engine) {
-        $engine->render("views/setup/database.html");
+
+        if (isset($_GET['n'])) {
+            switch ($_GET['n']) {
+                case "b":
+                    $engine->render("views/setup/bind.html");
+                    break;
+                case "u":
+                    $engine->render("views/setup/user.html");
+                    break;
+                default:
+                    $engine->render("views/setup/database.html");
+                    break;
+            }
+        } else {
+            $engine->render("views/setup/database.html");
+        }
     }
 }
