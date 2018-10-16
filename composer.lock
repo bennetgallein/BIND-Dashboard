@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52e2f5d874117899bdcc9e8bfbe78dae",
+    "content-hash": "9d2503ce1ee2ec662f5f0a95f23a5f49",
     "packages": [
         {
             "name": "bennetgallein/angle-framework",
@@ -49,12 +49,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bennetgallein/BIND-PHPWrapper.git",
-                "reference": "51d47370dbf7b4ee5abb9d1c7fa64dd6b79843d7"
+                "reference": "0a37321f620fb6a48ebd74125eef0d5c03dc16e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bennetgallein/BIND-PHPWrapper/zipball/51d47370dbf7b4ee5abb9d1c7fa64dd6b79843d7",
-                "reference": "51d47370dbf7b4ee5abb9d1c7fa64dd6b79843d7",
+                "url": "https://api.github.com/repos/bennetgallein/BIND-PHPWrapper/zipball/0a37321f620fb6a48ebd74125eef0d5c03dc16e9",
+                "reference": "0a37321f620fb6a48ebd74125eef0d5c03dc16e9",
                 "shasum": ""
             },
             "require": {
@@ -76,7 +76,7 @@
                 }
             ],
             "description": "A Wrapper to bind the PythonAPI to PHP",
-            "time": "2018-10-05T13:00:41+00:00"
+            "time": "2018-10-16T10:53:03+00:00"
         },
         {
             "name": "dusank/knapsack",
@@ -493,6 +493,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-pdo": "*"
+    },
     "platform-dev": []
 }

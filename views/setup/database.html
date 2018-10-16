@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <title>Setup</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="css/domains.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="card is-three-fifths column is-offset-one-fifth">
+            <header class="card-header has-text-centered">
+                <p class="card-header-title has-text-centered">
+                    Database Setup
+                </p>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field">
+                        <label class="label">Host:</label>
+                        <div class="control">
+                            <input id="host" class="input" type="text" placeholder="Database Host"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">User:</label>
+                        <div class="control">
+                            <input id="user" class="input" type="text" placeholder="Database User"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Password:</label>
+                        <div class="control">
+                            <input id="password" class="input" type="password" placeholder="Database Password"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Database:</label>
+                        <div class="control">
+                            <input id="database" class="input" type="text" placeholder="Database"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer" style="justify-content: flex-end;">
+                <div class="control is-grouped">
+                    <a id="submit" class="card-footer-item button is-success"
+                       style="margin-top: 10px; margin-right: 10px;">Next</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+{ js js/main.js }
+<script>
+
+    $("#submit").click(function () {
+        // test DB
+        let host = $("#host").val();
+        let user = $("#user").val();
+        let password = $("#password").val();
+        let db = $("#database").val();
+
+        $.post("{ :app_url }api/test/db", {
+            host: host,
+            user: user,
+            password: password,
+            database: db
+        }, function (data, status) {
+            obj = JSON.parse(data);
+            if (obj.hasOwnProperty("error")) {
+                console.log(obj.error);
+                $(".card-content").prepend(
+                    $('<div class="notification is-danger">\n' +
+                        '  <button class="delete"></button>' + obj.error + '</div>').hide().fadeIn("slow")
+                );
+            } else {
+                $(".card-content").prepend(
+                    $('<div class="notification is-success">\n' +
+                        '  <button class="delete"></button>Connection successful! Saved to config! Redirecting</div>').hide().fadeIn("slow")
+                );
+                setTimeout(function() {
+                    location.replace("{ :app_url }setup?n=b");
+                }, 3000);
+            }
+        });
+
+    });
+
+</script>
+</body>
+</html>
